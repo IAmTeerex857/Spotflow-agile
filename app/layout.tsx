@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Geist,
   Geist_Mono,
@@ -13,6 +13,7 @@ import "generative-loaders/styles.css";
 import "./globals.css";
 import { Providers } from "./providers";
 import { ThemeScript } from "@/components/theme/ThemeScript";
+import { SITE_NAME, SITE_URL, shareTags, themeColors } from "@/lib/site";
 
 // Hub
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
@@ -39,10 +40,18 @@ const fontVars = [
   ibmPlex.variable,
 ].join(" ");
 
+const description =
+  "Planning poker and anonymous sprint retros for the Spotflow team. Open a session, share the link, and everyone is in. Nobody has to sign up.";
+
 export const metadata: Metadata = {
-  title: "Spotflow Agile Tools",
-  description: "Planning poker and sprint retros for the Spotflow team.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
+  description,
+  applicationName: SITE_NAME,
+  ...shareTags({ title: SITE_NAME, description, path: "/" }),
 };
+
+export const viewport: Viewport = { themeColor: themeColors("#ffffff", "#000000") };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

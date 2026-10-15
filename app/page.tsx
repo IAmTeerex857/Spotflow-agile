@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Surface } from "@/components/Surface";
 import { SiteHeader } from "@/components/SiteHeader";
-import { SuiteMark } from "@/components/hub/SuiteMark";
+import { SpotflowLockup } from "@/components/SpotflowLogo";
 import { HeroActions } from "@/components/hub/HeroActions";
 import { ToolCard } from "@/components/hub/ToolCard";
 import { PokerPreview, RetroPreview } from "@/components/hub/ToolPreviews";
@@ -15,9 +15,8 @@ export default function HubLanding() {
     <Surface name="hub">
       <SiteHeader
         brand={
-          <Link href="/" className="flex items-center gap-2.5">
-            <SuiteMark size={30} />
-            <span className="text-[15px] font-semibold tracking-[-0.01em]">Spotflow Agile Tools</span>
+          <Link href="/" aria-label="Spotflow Agile Tools home">
+            <SpotflowLockup />
           </Link>
         }
         links={[
@@ -115,10 +114,7 @@ export default function HubLanding() {
 
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-3 px-4 py-6 sm:px-8">
-          <div className="flex items-center gap-2.5">
-            <SuiteMark size={22} radius={6} />
-            <span className="text-[13px] text-text-2">Spotflow Agile Tools</span>
-          </div>
+          <SpotflowLockup height={16} size="sm" />
           <span className="mono text-xs text-text-3">agile.spotflow.one</span>
         </div>
       </footer>

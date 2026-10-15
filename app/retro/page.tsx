@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { SpotflowLockup } from "@/components/SpotflowLogo";
 import { History } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Button } from "@/components/ui/Button";
@@ -99,7 +101,9 @@ export default function RetroLanding() {
 
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-3 px-4 py-6 text-[13px] text-text-3 sm:px-8">
-          <div>Part of Spotflow Agile Tools</div>
+          <Link href="/" className="flex items-center gap-2 text-[13px] text-text-3 transition-colors hover:text-text-2">
+            Part of <SpotflowLockup height={15} size="sm" />
+          </Link>
           <div className="mono">agile.spotflow.one/retro</div>
         </div>
       </footer>
