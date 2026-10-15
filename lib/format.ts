@@ -21,3 +21,8 @@ export function formatClock(totalSeconds: number): string {
   const pad = (n: number) => String(n).padStart(2, "0");
   return h > 0 ? `${h}:${pad(m)}:${pad(sec)}` : `${pad(m)}:${pad(sec)}`;
 }
+
+/** "1 card", "4 cards". */
+export function plural(n: number, word: string) {
+  return `${n} ${word}${n === 1 ? "" : "s"}`;
+}

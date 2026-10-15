@@ -3,7 +3,7 @@ import { SpotflowLockup } from "@/components/SpotflowLogo";
 import { LayoutGrid, Plus } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Button } from "@/components/ui/Button";
-import { BlobSteps } from "@/components/BlobSteps";
+import { Steps } from "@/components/Steps";
 import { PokerScene } from "@/components/hero/PokerScene";
 import { PokerBrand } from "@/components/poker/PokerBrand";
 import { DECK_PRESETS } from "@/lib/poker/decks";
@@ -89,11 +89,11 @@ export default function PokerLanding() {
           <h2 className="mb-8 font-display text-[28px] font-semibold tracking-[-0.03em] sm:text-[36px]">
             Three steps to a number everyone trusts
           </h2>
-          <BlobSteps
+          <Steps
             steps={[
-              { seed: "poker-step-room", title: "Create a room", body: "Name it, pick a deck, and add the stories you want to size." },
-              { seed: "poker-step-invite", title: "Invite the team", body: "Share the link. People type their name once and they are in." },
-              { seed: "poker-step-vote", title: "Vote and reveal", body: "Everyone picks a card. Flip them together, talk it through, and lock in the number." },
+              { icon: "room", title: "Create a room", body: "Name it, pick a deck, and add the stories you want to size." },
+              { icon: "invite", title: "Invite the team", body: "Share the link. People type their name once and they are in." },
+              { icon: "vote", title: "Vote and reveal", body: "Everyone picks a card. Flip them together, talk it through, and lock in the number." },
             ]}
           />
         </section>

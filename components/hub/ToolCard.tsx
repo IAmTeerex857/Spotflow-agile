@@ -3,19 +3,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "motion/react";
-import { BorderBeam } from "border-beam";
 import { ArrowRight } from "lucide-react";
-import { useTheme } from "@/components/theme/theme";
 import { spring } from "@/components/ui/Button";
 
 type Accent = "poker" | "retro";
 
-const ACCENT = {
-  poker: { text: "text-poker", soft: "bg-poker-soft border-poker-border", beam: "mono" },
-  retro: { text: "text-retro", soft: "bg-retro-soft border-retro-border", beam: "sunset" },
-} as const;
+const ACCENT_TEXT = { poker: "text-poker", retro: "text-retro" } as const;
 
-/** Hub tool card. A border beam wakes up while the card is hovered or focused. */
+/** One cell of the hub's tools panel: an isometric illustration above the copy. */
 export function ToolCard({
   href,
   accent,
@@ -25,7 +20,7 @@ export function ToolCard({
   meta,
   cta,
   logo,
-  preview,
+  art,
 }: {
   href: string;
   accent: Accent;
@@ -35,51 +30,39 @@ export function ToolCard({
   meta: React.ReactNode;
   cta: string;
   logo: React.ReactNode;
-  preview: React.ReactNode;
+  art: React.ReactNode;
 }) {
-  const { theme } = useTheme();
   const [lit, setLit] = useState(false);
-  const a = ACCENT[accent];
 
   return (
-    <BorderBeam
-      size="md"
-      colorVariant={a.beam}
-      theme={theme}
-      active={lit}
-      strength={0.75}
-      className="rounded-[22px]"
+    <Link
+      href={href}
+      onMouseEnter={() => setLit(true)}
+      onMouseLeave={() => setLit(false)}
+      onFocus={() => setLit(true)}
+      onBlur={() => setLit(false)}
+      className="group flex flex-col outline-none transition-colors hover:bg-bg-subtle focus-visible:bg-bg-subtle"
     >
-      <motion.div
-        onHoverStart={() => setLit(true)}
-        onHoverEnd={() => setLit(false)}
-        onFocus={() => setLit(true)}
-        onBlur={() => setLit(false)}
-        whileHover={{ y: -3 }}
-        transition={spring}
-        className="h-full overflow-hidden rounded-[22px] border border-border bg-surface shadow-sm-t"
-      >
-        <Link href={href} className="flex h-full flex-col outline-none">
-          {preview}
-          <div className="flex flex-1 flex-col px-7 pb-7 pt-6">
-            <div className="mb-3 flex items-center gap-2.5">
-              {logo}
-              <div>
-                <div className="text-[17px] font-semibold tracking-[-0.01em]">{name}</div>
-                <div className="mono text-[10.5px] tracking-[0.04em] text-text-3">{kicker}</div>
-              </div>
-            </div>
-            <p className="mb-5 text-sm leading-relaxed text-text-2">{description}</p>
-            <div className="mb-5 mt-auto text-xs text-text-3">{meta}</div>
-            <div className={`flex items-center justify-between rounded-[12px] border px-4 py-3 ${a.soft} ${a.text}`}>
-              <span className="text-sm font-semibold">{cta}</span>
-              <motion.span animate={{ x: lit ? 4 : 0 }} transition={spring} className="flex">
-                <ArrowRight size={17} strokeWidth={2.2} />
-              </motion.span>
-            </div>
-          </div>
-        </Link>
+      <motion.div animate={{ y: lit ? -6 : 0 }} transition={spring} className="h-[240px] px-6 pt-6 sm:h-[290px]">
+        {art}
       </motion.div>
-    </BorderBeam>
+      <div className="flex flex-1 flex-col px-7 pb-8 pt-2 sm:px-9">
+        <div className="mb-3 flex items-center gap-2.5">
+          {logo}
+          <div>
+            <h3 className="text-[19px] font-semibold tracking-[-0.02em]">{name}</h3>
+            <div className="mono text-[10.5px] tracking-[0.04em] text-text-3">{kicker}</div>
+          </div>
+        </div>
+        <p className="mb-3 max-w-[46ch] text-[15px] leading-relaxed text-text-2">{description}</p>
+        <p className="mb-6 text-xs text-text-3">{meta}</p>
+        <span className={`mt-auto flex items-center gap-1.5 text-sm font-semibold ${ACCENT_TEXT[accent]}`}>
+          {cta}
+          <motion.span animate={{ x: lit ? 4 : 0 }} transition={spring} className="flex">
+            <ArrowRight size={16} strokeWidth={2.2} />
+          </motion.span>
+        </span>
+      </div>
+    </Link>
   );
 }

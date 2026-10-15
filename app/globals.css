@@ -60,7 +60,7 @@
   --text: #0a0a0a; --text-2: #666666; --text-3: #999999;
   --accent: #0a0a0a; --accent-hover: #262626; --accent-fg: #ffffff; --accent-soft: #f4f4f4; --accent-border: #e0e0e0;
   --poker: #0e9d63; --poker-soft: #e8f5ee; --poker-border: #bfe4d1;
-  --retro: #d9622f; --retro-soft: #fbeee6; --retro-border: #f0c6ac;
+  --retro: #e6733c; --retro-soft: #fbeee6; --retro-border: #f0c6ac;
   --online: #16a34a; --offline: #dc2626; --inactive: #b1ab9f; --danger: #d1332e; --danger-soft: #fbeceb; --warn: #c88a2e;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
   --shadow-md: 0 4px 20px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.05);
@@ -116,7 +116,7 @@
   --panel: #fbf3ed;
   --border: #e6e3df; --border-strong: #d3cfc8;
   --text: #201d19; --text-2: #57534b; --text-3: #938d83;
-  --accent: #d9622f; --accent-hover: #c14f1f; --accent-fg: #ffffff; --accent-soft: #fbeee6; --accent-border: #f0c6ac;
+  --accent: #e6733c; --accent-hover: #d96631; --accent-fg: #ffffff; --accent-soft: #fbeee6; --accent-border: #f0c6ac;
   --online: #16a34a; --offline: #dc2626; --inactive: #b1ab9f; --danger: #c8342e; --danger-soft: #fbeceb; --warn: #c88a2e;
   --shadow-sm: 0 1px 2px rgba(28,27,35,0.06), 0 1px 1px rgba(28,27,35,0.04);
   --shadow-md: 0 6px 18px rgba(28,27,35,0.08), 0 2px 5px rgba(28,27,35,0.05);
@@ -173,23 +173,21 @@
   --k-screen: #1d1d1d; --k-shadow: rgba(0, 0, 0, 0.07);
   --g-top: #c4f0d6; --g-left: #55c48c; --g-right: #2f9f69; --g-ink: #0b8a55;
   --o-top: #fcd9c4; --o-left: #ec8b56; --o-right: #c9652c; --o-note: #fde6d6;
-  --sel: #2f80ed;
 }
 :root[data-theme="dark"] .hub-scene {
   --k-top: #1b1b1b; --k-left: #131313; --k-right: #0d0d0d; --k-line: #8a8a8a;
   --k-screen: #050505; --k-shadow: rgba(0, 0, 0, 0.5);
   --g-top: #12402b; --g-left: #23a86b; --g-right: #17784c; --g-ink: #3ddc97;
   --o-top: #4a2614; --o-left: #e07a43; --o-right: #a9521f; --o-note: #3a2214;
-  --sel: #5b9cf5;
 }
 
 .retro-scene {
-  --r-grid: rgba(217, 98, 47, 0.10);
+  --r-grid: rgba(230, 115, 60, 0.10);
   --r-glass-top: rgba(255, 233, 218, 0.62); --r-glass-left: rgba(246, 196, 166, 0.45); --r-glass-right: rgba(236, 165, 125, 0.5);
-  --r-line: rgba(217, 98, 47, 0.28); --r-shadow: rgba(217, 98, 47, 0.08);
+  --r-line: rgba(230, 115, 60, 0.28); --r-shadow: rgba(230, 115, 60, 0.08);
   --r-block-top: #fbe6d8; --r-block-left: #f6cdb3; --r-block-right: #efb592;
   --r-door-a: #e2733f; --r-door-b: #f3a77c;
-  --r-note: #fffaf6; --r-ink: #d9622f;
+  --r-note: #fffaf6; --r-ink: #e6733c;
   --r-hidden: #efe3da; --r-hidden-ink: #cdb6a6;
 }
 :root[data-theme="dark"] .retro-scene {
@@ -200,6 +198,17 @@
   --r-door-a: #ef7b45; --r-door-b: #7a3a17;
   --r-note: #2f2621; --r-ink: #ef7b45;
   --r-hidden: #3a302a; --r-hidden-ink: #5b4b40;
+}
+
+/* Flat "How it works" icons: tool pages use their accent, the hub mixes both tools */
+.step-icon {
+  --ic-line: var(--text); --ic-paper: var(--surface);
+  --ic-a: var(--accent); --ic-a-soft: var(--accent-soft);
+  --ic-b: var(--accent); --ic-b-soft: var(--accent-soft);
+}
+[data-surface="hub"] .step-icon {
+  --ic-a: var(--poker); --ic-a-soft: var(--poker-soft);
+  --ic-b: var(--retro); --ic-b-soft: var(--retro-soft);
 }
 
 /* Dissolves a hero scene into the page around its edges */

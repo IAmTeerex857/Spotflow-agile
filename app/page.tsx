@@ -4,9 +4,9 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SpotflowLockup } from "@/components/SpotflowLogo";
 import { HeroActions } from "@/components/hub/HeroActions";
 import { ToolCard } from "@/components/hub/ToolCard";
-import { PokerPreview, RetroPreview } from "@/components/hub/ToolPreviews";
+import { PokerArt, RetroArt } from "@/components/hub/ToolArt";
 import { HubScene } from "@/components/hero/HubScene";
-import { BlobSteps } from "@/components/BlobSteps";
+import { Steps } from "@/components/Steps";
 import { PokerMark } from "@/components/poker/PokerMark";
 import { RetroMark } from "@/components/retro/icons";
 
@@ -53,7 +53,7 @@ export default function HubLanding() {
         {/* TOOLS */}
         <section className="mx-auto max-w-[1200px] px-4 pb-20 pt-6 sm:px-8">
           <SectionHeading eyebrow="The tools" title="Two rituals, one home" />
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 divide-y divide-border overflow-hidden rounded-[22px] border border-border bg-surface md:grid-cols-2 md:divide-x md:divide-y-0">
             <ToolCard
               href="/poker"
               accent="poker"
@@ -67,7 +67,7 @@ export default function HubLanding() {
                   <PokerMark size={34} />
                 </span>
               }
-              preview={<PokerPreview />}
+              art={<PokerArt />}
             />
             <ToolCard
               href="/retro"
@@ -82,7 +82,7 @@ export default function HubLanding() {
                   <RetroMark size={34} />
                 </span>
               }
-              preview={<RetroPreview />}
+              art={<RetroArt />}
             />
           </div>
         </section>
@@ -90,20 +90,20 @@ export default function HubLanding() {
         {/* HOW IT WORKS */}
         <section id="how-it-works" className="mx-auto max-w-[1200px] scroll-mt-20 px-4 pb-24 sm:px-8">
           <SectionHeading eyebrow="How it works" title="From link to decision in minutes" />
-          <BlobSteps
+          <Steps
             steps={[
               {
-                seed: "hub-step-open",
+                icon: "open",
                 title: "Open a session",
                 body: "Pick Poker or Retro and start one with a single click. There is nothing to set up first.",
               },
               {
-                seed: "hub-step-share",
+                icon: "share",
                 title: "Share the link",
                 body: "Drop it in your team chat. Poker asks for a name. Retro asks for nothing at all.",
               },
               {
-                seed: "hub-step-decide",
+                icon: "decide",
                 title: "Decide together",
                 body: "Votes and cards stay hidden until everyone reveals at the same moment, so nobody follows the crowd.",
               },

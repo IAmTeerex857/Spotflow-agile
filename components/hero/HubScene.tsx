@@ -126,7 +126,7 @@ export function HubScene() {
 
       {/* teammates */}
       {BLOBS.map((b, i) => (
-        <Teammate key={b.seed} uri={blobUris[i]} at={b.at} index={i} selected={i === 0} play={play} />
+        <Teammate key={b.seed} uri={blobUris[i]} at={b.at} index={i} play={play} />
       ))}
 
       <FlowLine from={[BLOBS[1].at[0] + 28, BLOBS[1].at[1] + 64]} to={project([150, 48, SURFACE_Z + 15])} play={play} />
@@ -292,13 +292,11 @@ function Teammate({
   uri,
   at: [x, y],
   index,
-  selected,
   play,
 }: {
   uri: string;
   at: P2;
   index: number;
-  selected: boolean;
   play: boolean;
 }) {
   const voteAt = VOTES[index].t;
@@ -309,19 +307,6 @@ function Teammate({
     >
       <circle cx={x + 28} cy={y + 28} r={28} fill="var(--k-top)" stroke="var(--k-line)" strokeWidth={1.3} />
       <image href={uri} x={x + 4} y={y + 4} width={48} height={48} />
-      {selected && (
-        <g fill="none" stroke="var(--sel)" strokeWidth={1.4}>
-          <rect x={x - 8} y={y - 8} width={72} height={72} />
-          {[
-            [x - 8, y - 8],
-            [x + 64, y - 8],
-            [x - 8, y + 64],
-            [x + 64, y + 64],
-          ].map(([hx, hy]) => (
-            <rect key={`${hx}-${hy}`} x={hx - 3.5} y={hy - 3.5} width={7} height={7} fill="var(--k-top)" />
-          ))}
-        </g>
-      )}
       {/* "voted" badge */}
       <motion.g
         initial={play ? { scale: 0, opacity: 0 } : { scale: 1, opacity: 1 }}

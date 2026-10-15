@@ -10,7 +10,7 @@ import { StatusScreen } from "@/components/StatusScreen";
 import { NotConnected } from "@/components/NotConnected";
 import { isConfigured } from "@/lib/supabase/client";
 import { useAsync } from "@/lib/useAsync";
-import { formatRelative } from "@/lib/format";
+import { formatRelative, plural } from "@/lib/format";
 import { retroApi } from "@/lib/retro/api";
 import { phaseInfo, type RetroPhase } from "@/lib/retro/types";
 import { StartRetroButton } from "./StartRetroButton";
@@ -105,7 +105,7 @@ function ConnectedBoardList() {
                 </div>
                 <PhaseBadge phase={b.phase} />
                 <span className="whitespace-nowrap text-[13px] text-text-2">
-                  {b.card_count} cards · {b.action_count} actions
+                  {plural(b.card_count, "card")} · {plural(b.action_count, "action")}
                 </span>
                 <span className="text-[13px] text-text-3 sm:text-right">{formatRelative(b.updated_at)}</span>
               </Link>

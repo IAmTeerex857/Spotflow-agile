@@ -3,7 +3,7 @@ import { SpotflowLockup } from "@/components/SpotflowLogo";
 import { History } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Button } from "@/components/ui/Button";
-import { BlobSteps } from "@/components/BlobSteps";
+import { Steps } from "@/components/Steps";
 import { RetroScene } from "@/components/hero/RetroScene";
 import { RetroBrand } from "@/components/retro/RetroBrand";
 import { StartRetroButton } from "@/components/retro/StartRetroButton";
@@ -70,12 +70,12 @@ export default function RetroLanding() {
         <section id="how-it-works" className="mx-auto max-w-[1200px] scroll-mt-20 px-4 py-20 sm:px-8">
           <div className="mono mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-accent">How it works</div>
           <h2 className="mb-8 text-[28px] font-extrabold tracking-[-0.03em] sm:text-[36px]">Four steps, one board</h2>
-          <BlobSteps
+          <Steps
             steps={[
-              { seed: "retro-step-write", title: "Write", body: "Add cards to three columns. Only you can read yours until the reveal." },
-              { seed: "retro-step-reveal", title: "Reveal, group and vote", body: "Every card appears at once. Stack similar ones and vote for what to discuss." },
-              { seed: "retro-step-act", title: "Agree on actions", body: "Talk through the top topics and write down what the team will do." },
-              { seed: "retro-step-done", title: "Done", body: "The board ends with a clean list of action items. Nothing else to click." },
+              { icon: "write", title: "Write", body: "Add cards to three columns. Only you can read yours until the reveal." },
+              { icon: "reveal", title: "Reveal, group and vote", body: "Every card appears at once. Stack similar ones and vote for what to discuss." },
+              { icon: "act", title: "Agree on actions", body: "Talk through the top topics and write down what the team will do." },
+              { icon: "done", title: "Done", body: "The board ends with a clean list of action items. Nothing else to click." },
             ]}
           />
         </section>
