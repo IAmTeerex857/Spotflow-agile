@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { project } from "@/components/iso/geometry";
 import { IsoSlab, OnLeft, OnTop, type Shade } from "@/components/iso/primitives";
-import { LANES } from "@/lib/retro/types";
 
 /**
  * Retro hero: private notes ride a conveyor of glass cubes into the board,
@@ -150,49 +149,20 @@ function RevealedNote({ variant }: { variant: number }) {
   );
 }
 
-/**
- * The board printed on top of the block: the app's four lanes, each named.
- * Lanes run along the block's long edge so the names are large enough to read.
- */
+/** The four-column board printed on top of the block. */
 function BoardTop() {
-  const pad = 12;
-  const gap = 6;
-  const laneD = (BLOCK.d - pad * 2 - gap * (LANES.length - 1)) / LANES.length;
-  const laneW = BLOCK.w - pad * 2;
+  const cols = 4;
+  const colW = (BLOCK.w - 30) / cols;
   return (
     <g>
-      {LANES.map((lane, i) => {
-        const action = lane.key === "todo";
-        return (
-          <g key={lane.key} transform={`translate(${pad} ${pad + i * (laneD + gap)})`}>
-            <rect width={laneW} height={laneD} rx={6} fill="var(--r-note)" opacity={action ? 1 : 0.72} />
-            <circle cx={12} cy={laneD / 2} r={3.5} fill="var(--r-ink)" opacity={action ? 1 : 0.55} />
-            <text
-              x={22}
-              y={laneD / 2 + 6}
-              fontSize={17}
-              fontWeight={800}
-              letterSpacing={-0.3}
-              fill="var(--r-ink)"
-              style={{ fontFamily: "var(--font-manrope)" }}
-            >
-              {lane.label}
-            </text>
-            {[0, 1].slice(0, lane.label.length > 10 ? 1 : 2).map((n) => (
-              <rect
-                key={n}
-                x={laneW - 8 - (n + 1) * 30 - n * 4}
-                y={8}
-                width={30}
-                height={laneD - 16}
-                rx={3}
-                fill="var(--r-ink)"
-                opacity={0.16}
-              />
-            ))}
-          </g>
-        );
-      })}
+      {Array.from({ length: cols }, (_, c) => (
+        <g key={c} transform={`translate(${12 + c * (colW + 2)} 14)`}>
+          <rect width={colW - 6} height={10} rx={5} fill="var(--r-ink)" opacity={c === 3 ? 0.9 : 0.35} />
+          {[0, 1, 2].slice(0, 3 - (c % 2)).map((r) => (
+            <rect key={r} y={20 + r * 44} width={colW - 6} height={36} rx={4} fill="var(--r-note)" opacity={0.9} />
+          ))}
+        </g>
+      ))}
     </g>
   );
 }
