@@ -7,13 +7,12 @@ import { Steps } from "@/components/Steps";
 import { RetroScene } from "@/components/hero/RetroScene";
 import { RetroBrand } from "@/components/retro/RetroBrand";
 import { StartRetroButton } from "@/components/retro/StartRetroButton";
-import { IconBolt, IconIncognito, IconLock, IconPhone } from "@/components/retro/icons";
 
 const FEATURES = [
-  { icon: <IconIncognito size={19} />, title: "Anonymous", body: "No names, no emails, no accounts. Nobody can tell who wrote what." },
-  { icon: <IconBolt size={19} />, title: "Live", body: "Cards, votes and reactions show up for everyone the moment they happen." },
-  { icon: <IconLock size={19} />, title: "Private if you want", body: "Add a password and only people who know it can open the board." },
-  { icon: <IconPhone size={19} />, title: "Works on any screen", body: "Join from a laptop or a phone. There is nothing to install." },
+  { title: "Anonymous", body: "No names, no emails, no accounts. Nobody can tell who wrote what." },
+  { title: "Live", body: "Cards, votes and reactions show up for everyone the moment they happen." },
+  { title: "Private if you want", body: "Add a password and only people who know it can open the board." },
+  { title: "Works on any screen", body: "Join from a laptop or a phone. There is nothing to install." },
 ];
 
 export default function RetroLanding() {
@@ -40,14 +39,10 @@ export default function RetroLanding() {
           />
           <div className="relative mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-6 px-4 pb-10 pt-12 sm:px-8 lg:min-h-[min(calc(100vh-64px),760px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:py-10">
             <div className="relative z-10">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent-border bg-surface px-3 py-1 text-xs font-semibold text-accent shadow-sm-t">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                Anonymous sprint retros
-              </div>
-              <h1 className="text-balance mb-6 text-[40px] font-extrabold leading-[1.04] tracking-[-0.04em] sm:text-[52px] xl:text-[58px]">
+              <h1 className="text-balance mb-6 font-[family-name:var(--font-geist)] text-[42px] font-semibold leading-[1] tracking-[-0.045em] sm:text-[52px] xl:text-[60px]">
                 Reflect honestly.
                 <br />
-                <span className="text-accent">Leave with a plan.</span>
+                Leave with a plan.
               </h1>
               <p className="text-pretty mb-9 max-w-[44ch] text-lg leading-relaxed text-text-2">
                 Everyone writes in private. When the team is ready, every card is revealed at once.
@@ -83,14 +78,12 @@ export default function RetroLanding() {
         {/* FEATURES */}
         <section className="mx-auto max-w-[1200px] px-4 pb-24 sm:px-8">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {FEATURES.map((f) => (
+            {FEATURES.map((f, i) => (
               <div
                 key={f.title}
                 className="rounded-2xl border border-border bg-surface p-6 shadow-sm-t transition-all duration-200 hover:-translate-y-1 hover:border-accent-border hover:shadow-md-t"
               >
-                <div className="mb-4 flex h-[38px] w-[38px] items-center justify-center rounded-[11px] border border-accent-border bg-accent-soft text-accent">
-                  {f.icon}
-                </div>
+                <div className="mono mb-4 text-xs text-accent">0{i + 1}</div>
                 <div className="mb-2 text-base font-bold tracking-[-0.01em]">{f.title}</div>
                 <div className="text-[13.5px] leading-relaxed text-text-2">{f.body}</div>
               </div>
