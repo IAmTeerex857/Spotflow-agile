@@ -1,31 +1,17 @@
-import { IsoCylinder, IsoSlab, OnLeft, OnTop, type Shade } from "@/components/iso/primitives";
+import { IsoCylinder, IsoSlab, OnLeft, OnTop } from "@/components/iso/primitives";
+import { GREEN, KEY, MONO, ORANGE, Shadow } from "@/components/iso/palette";
 import { project } from "@/components/iso/geometry";
 
 /*
- * Static isometric illustrations for the hub's tool cards. They reuse the
- * hero's drawing kit and the `.hub-scene` palette: neutral keys, with Poker
- * green or Retro orange as the one accent.
+ * Static isometric illustrations for the hub's tool cards, also shown in the
+ * apps' empty states. They reuse the hero's drawing kit and the `.hub-scene`
+ * palette: neutral keys, with Poker green or Retro orange as the one accent.
  */
-
-const KEY: Shade = { top: "var(--k-top)", left: "var(--k-left)", right: "var(--k-right)", line: "var(--k-line)", lineWidth: 1.2 };
-const GREEN: Shade = { top: "var(--g-top)", left: "var(--g-left)", right: "var(--g-right)", line: "var(--k-line)", lineWidth: 1.2 };
-const ORANGE: Shade = { top: "var(--o-top)", left: "var(--o-left)", right: "var(--o-right)", line: "var(--k-line)", lineWidth: 1.2 };
-
-const MONO = { fontFamily: "var(--font-geist-mono)" };
 
 /** Dashed cable on the floor through world points (x, y). */
 function Cable({ points }: { points: [number, number][] }) {
   const d = points.map(([x, y], i) => `${i ? "L" : "M"}${project([x, y, 0]).join(" ")}`).join("");
   return <path d={d} fill="none" stroke="var(--k-line)" strokeOpacity={0.45} strokeWidth={1.1} strokeDasharray="4 4" />;
-}
-
-/** Soft floor shadow under a footprint. */
-function Shadow({ x, y, w, d }: { x: number; y: number; w: number; d: number }) {
-  return (
-    <OnTop x={x + 8} y={y + 8} z={0}>
-      <rect width={w} height={d} rx={14} fill="var(--k-shadow)" />
-    </OnTop>
-  );
 }
 
 export function PokerArt() {

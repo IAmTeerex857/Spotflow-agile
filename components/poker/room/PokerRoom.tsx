@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useState } from "react";
 import { Clock, LayoutGrid, Settings2, Timer } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -8,6 +9,7 @@ import { CopyButton, siteUrl } from "@/components/ui/CopyButton";
 import { PanelLoader } from "@/components/ui/Loader";
 import { StatusScreen } from "@/components/StatusScreen";
 import { formatClock } from "@/lib/format";
+import { rise } from "@/lib/motion";
 import { deckLabel } from "@/lib/poker/decks";
 import { useRoom } from "@/lib/poker/useRoom";
 import type { ReadyRoom } from "@/lib/poker/types";
@@ -25,7 +27,7 @@ export function PokerRoom({ slug }: { slug: string }) {
 
   switch (state.kind) {
     case "loading":
-      return <PanelLoader label="Joining the room" />;
+      return <PanelLoader tool="poker" label="Joining the room" />;
     case "not_found":
       return (
         <StatusScreen
@@ -69,7 +71,7 @@ function Room({
 
   return (
     <div className="mx-auto max-w-[1200px] px-4 pb-20 pt-6 sm:px-8">
-      <div className="mb-5 flex flex-wrap items-center gap-3">
+      <motion.div {...rise(0)} className="mb-5 flex flex-wrap items-center gap-3">
         <div className="flex w-full min-w-0 items-baseline gap-3 sm:w-auto sm:flex-1">
           <h1 className="truncate font-display text-[24px] font-semibold tracking-[-0.02em] sm:text-[26px]">{room.name}</h1>
           <span className="hidden shrink-0 rounded-full border border-border px-2.5 py-0.5 text-xs text-text-3 sm:inline">
@@ -82,10 +84,10 @@ function Room({
           </Button>
         )}
         <CopyButton text={siteUrl(`/poker/room/${room.slug}`)} label="Invite link" />
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
-        <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm-t" aria-label="Current story">
+        <motion.section {...rise(0.06)} className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm-t" aria-label="Current story">
           <div className="border-b border-border px-6 py-4 text-center">
             <div className="mono mb-1 text-[11px] uppercase tracking-[0.12em] text-text-3">
               {story ? "Now estimating" : "No story yet"}
@@ -127,9 +129,9 @@ function Room({
               )}
             </>
           )}
-        </section>
+        </motion.section>
 
-        <aside className="flex flex-col gap-3.5">
+        <motion.aside {...rise(0.12)} className="flex flex-col gap-3.5">
           <StatusBanner phase={room.phase} hasStory={Boolean(story)} waiting={players.length - voted} estimate={story?.estimate ?? null} />
           {me.is_moderator && story && (
             <Controls
@@ -157,11 +159,11 @@ function Room({
             onRole={(user, participation, isModerator) => void actions.setRole(user, participation, isModerator)}
             onRemove={(user) => void actions.removeParticipant(user)}
           />
-        </aside>
+        </motion.aside>
       </div>
 
       {room.settings.allow_stories && (
-        <div className="mt-5">
+        <motion.div {...rise(0.18)} className="mt-5">
           <StoryQueue
             roomName={room.name}
             stories={stories}
@@ -173,7 +175,7 @@ function Room({
             onDelete={(id) => void actions.deleteStory(id)}
             onMove={(id, position) => void actions.moveStory(id, position)}
           />
-        </div>
+        </motion.div>
       )}
 
       {dialog === "settings" && (

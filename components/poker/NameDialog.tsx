@@ -78,7 +78,7 @@ export function NameDialog({
 /** Renders children once this browser has a poker name; asks for one first. */
 export function NameGate({ children }: { children: React.ReactNode }) {
   const { name } = usePokerName();
-  if (name === undefined) return <PanelLoader label="Getting things ready" />;
+  if (name === undefined) return <PanelLoader tool="poker" label="Getting things ready" />;
   if (name === null) {
     return (
       <>

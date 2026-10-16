@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import {
@@ -23,6 +24,7 @@ import { isConfigured } from "@/lib/supabase/client";
 import { buildTopics } from "@/lib/retro/topics";
 import { LANES, phaseInfo, type RetroLane } from "@/lib/retro/types";
 import { useRetroBoard, type ReadyBoard } from "@/lib/retro/useRetroBoard";
+import { rise } from "@/lib/motion";
 import { BoardHeader } from "./BoardHeader";
 import { Column } from "./Column";
 import { NotePreview } from "./Note";
@@ -41,7 +43,7 @@ function ConnectedBoard({ slug }: { slug: string }) {
 
   switch (state.kind) {
     case "loading":
-      return <PanelLoader label="Opening the board" />;
+      return <PanelLoader tool="retro" label="Opening the board" />;
     case "not_found":
       return (
         <StatusScreen
@@ -151,10 +153,13 @@ function Board({
         onDelete={() => setConfirm("delete")}
       />
 
-      <div className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center justify-between gap-3 px-4 pb-2 pt-5 sm:px-7">
+      <motion.div
+        {...rise(0)}
+        className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center justify-between gap-3 px-4 pb-2 pt-5 sm:px-7"
+      >
         <PhaseSteps phase={phase} />
         <p className="text-[13px] text-text-3">{phaseInfo(phase).hint}</p>
-      </div>
+      </motion.div>
 
       <DndContext
         sensors={sensors}
@@ -179,20 +184,21 @@ function Board({
               )}
             </div>
           )}
-          {lanes.map((lane) => (
-            <Column
-              key={lane.key}
-              lane={lane.key}
-              label={lane.label}
-              placeholder={lane.placeholder}
-              phase={phase}
-              open={lane.key === "todo" ? phase === "action_items" : phase === "brainstorm"}
-              topics={topicsByLane.get(lane.key) ?? []}
-              hidden={phase === "brainstorm" ? (hidden[lane.key] ?? 0) : 0}
-              revealIds={revealIds}
-              handlers={handlers}
-              onAdd={(body) => actions.addCard(lane.key, body)}
-            />
+          {lanes.map((lane, i) => (
+            <motion.div key={lane.key} {...rise(0.06 + i * 0.06)} className="min-w-0">
+              <Column
+                lane={lane.key}
+                label={lane.label}
+                placeholder={lane.placeholder}
+                phase={phase}
+                open={lane.key === "todo" ? phase === "action_items" : phase === "brainstorm"}
+                topics={topicsByLane.get(lane.key) ?? []}
+                hidden={phase === "brainstorm" ? (hidden[lane.key] ?? 0) : 0}
+                revealIds={revealIds}
+                handlers={handlers}
+                onAdd={(body) => actions.addCard(lane.key, body)}
+              />
+            </motion.div>
           ))}
         </main>
         <DragOverlay dropAnimation={{ duration: 180, easing: "cubic-bezier(.2,.8,.2,1)" }}>

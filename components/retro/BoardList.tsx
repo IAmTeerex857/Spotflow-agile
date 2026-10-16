@@ -7,10 +7,13 @@ import { Lock, Search } from "lucide-react";
 import { Input } from "@/components/ui/Field";
 import { PanelLoader } from "@/components/ui/Loader";
 import { StatusScreen } from "@/components/StatusScreen";
+import { RetroArt } from "@/components/hub/ToolArt";
 import { NotConnected } from "@/components/NotConnected";
 import { isConfigured } from "@/lib/supabase/client";
 import { useAsync } from "@/lib/useAsync";
 import { formatRelative, plural } from "@/lib/format";
+import { rise, rowDelay } from "@/lib/motion";
+import { ROW_HOVER, ROW_ITEM, RowArrow } from "@/components/ui/RowHover";
 import { retroApi } from "@/lib/retro/api";
 import { phaseInfo, type RetroPhase } from "@/lib/retro/types";
 import { StartRetroButton } from "./StartRetroButton";
@@ -35,19 +38,19 @@ function ConnectedBoardList() {
   }, [boards, filter, query]);
 
   if (error) return <StatusScreen seed="retro-list-error" title="Couldn't load retros">{error}</StatusScreen>;
-  if (!boards) return <PanelLoader label="Loading retros" />;
+  if (!boards) return <PanelLoader tool="retro" label="Loading retros" />;
 
   return (
     <div className="mx-auto max-w-[1100px] px-4 pb-20 pt-10 sm:px-8">
-      <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
+      <motion.div {...rise(0)} className="mb-7 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-[30px] font-extrabold tracking-[-0.03em]">Past retros</h1>
           <p className="mt-1 text-sm text-text-2">Every board the team has run. Password boards stay locked.</p>
         </div>
         <StartRetroButton size="md" />
-      </div>
+      </motion.div>
 
-      <div className="mb-5 flex flex-wrap items-center gap-3">
+      <motion.div {...rise(0.05)} className="mb-5 flex flex-wrap items-center gap-3">
         <div className="relative w-full sm:w-[300px]">
           <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-text-3" />
           <Input
@@ -74,26 +77,19 @@ function ConnectedBoardList() {
             </button>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {shown.length === 0 ? (
-        <StatusScreen seed="retro-empty" title={boards.length ? "No matches" : "No retros yet"}>
-          {boards.length ? "Try another search." : "Start the first one. It takes one click."}
-        </StatusScreen>
+        <motion.div {...rise(0.1)}>
+          <StatusScreen seed="retro-empty" art={<RetroArt />} title={boards.length ? "No matches" : "No retros yet"}>
+            {boards.length ? "Try another search." : "Start the first one. It takes one click."}
+          </StatusScreen>
+        </motion.div>
       ) : (
-        <ul className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm-t">
+        <motion.ul {...rise(0.1)} className="rounded-2xl border border-border bg-surface shadow-sm-t">
           {shown.map((b, i) => (
-            <motion.li
-              key={b.slug}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: Math.min(i, 12) * 0.025 }}
-              className="border-b border-border last:border-b-0"
-            >
-              <Link
-                href={`/retro/${b.slug}`}
-                className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1.5 px-5 py-4 transition-colors hover:bg-bg-subtle sm:grid-cols-[minmax(0,1fr)_130px_150px_100px]"
-              >
+            <motion.li key={b.slug} {...rise(rowDelay(i, 0.14))} className={`border-b border-border last:border-b-0 ${ROW_ITEM}`}>
+              <Link href={`/retro/${b.slug}`} className={`${ROW_HOVER} grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1.5 px-5 py-4 sm:grid-cols-[minmax(0,1fr)_130px_150px_100px]`}>
                 <div className="flex min-w-0 items-center gap-2">
                   <span className="truncate text-[15px] font-bold tracking-[-0.01em]">{b.title}</span>
                   {b.has_password && <Lock size={13} className="shrink-0 text-text-3" aria-label="Password protected" />}
@@ -102,6 +98,7 @@ function ConnectedBoardList() {
                       Yours
                     </span>
                   )}
+                  <RowArrow />
                 </div>
                 <PhaseBadge phase={b.phase} />
                 <span className="whitespace-nowrap text-[13px] text-text-2">
@@ -111,7 +108,7 @@ function ConnectedBoardList() {
               </Link>
             </motion.li>
           ))}
-        </ul>
+        </motion.ul>
       )}
     </div>
   );
