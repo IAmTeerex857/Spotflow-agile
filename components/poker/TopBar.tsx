@@ -17,7 +17,7 @@ export function TopBar() {
   return (
     <>
       <SiteHeader
-        brand={<PokerBrand href="/poker/rooms" />}
+        brand={<PokerBrand />}
         links={[{ href: "/poker/rooms", label: "Your rooms" }]}
         actions={
           name ? (

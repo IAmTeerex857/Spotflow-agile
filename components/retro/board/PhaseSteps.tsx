@@ -13,9 +13,9 @@ export function PhaseSteps({ phase }: { phase: RetroPhase }) {
         const past = i < current;
         return (
           <li key={p.key} className="flex shrink-0 items-center gap-1" aria-current={active ? "step" : undefined}>
-            {i > 0 && <span className={`h-px w-5 sm:w-8 ${past || active ? "bg-accent" : "bg-border-strong"}`} />}
+            {i > 0 && <span className={`h-px w-4 sm:w-8 ${past || active ? "bg-accent" : "bg-border-strong"}`} />}
             <span
-              className={`relative flex items-center gap-2 rounded-full px-3 py-1.5 text-[13px] font-semibold ${
+              className={`relative flex items-center gap-2 rounded-full py-1.5 text-[13px] font-semibold ${active ? "px-3" : "px-1 sm:px-3"} ${
                 active ? "text-accent-fg" : past ? "text-text-2" : "text-text-3"
               }`}
             >
@@ -33,7 +33,7 @@ export function PhaseSteps({ phase }: { phase: RetroPhase }) {
               >
                 {past ? <Check size={12} strokeWidth={3} /> : i + 1}
               </span>
-              <span className="relative whitespace-nowrap">{p.name}</span>
+              <span className={`relative whitespace-nowrap ${active ? "" : "hidden sm:inline"}`}>{p.name}</span>
             </span>
           </li>
         );

@@ -155,7 +155,7 @@ function Board({
 
       <motion.div
         {...rise(0)}
-        className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center justify-between gap-3 px-4 pb-2 pt-5 sm:px-7"
+        className="mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-between gap-3 px-4 pb-2 pt-5 sm:px-8"
       >
         <PhaseSteps phase={phase} />
         <p className="text-[13px] text-text-3">{phaseInfo(phase).hint}</p>
@@ -169,8 +169,8 @@ function Board({
         onDragEnd={onDragEnd}
       >
         <main
-          className={`mx-auto grid w-full flex-1 gap-x-6 gap-y-8 px-4 pb-16 pt-5 sm:px-7 ${
-            phase === "done" ? "max-w-[560px]" : "max-w-[1440px] md:grid-cols-2 xl:grid-cols-4"
+          className={`mx-auto grid w-full flex-1 gap-x-5 gap-y-6 px-4 pb-16 pt-5 sm:px-8 md:gap-y-8 ${
+            phase === "done" ? "max-w-[560px]" : "max-w-[1200px] md:grid-cols-2 xl:grid-cols-4"
           }`}
         >
           {phase === "done" && (

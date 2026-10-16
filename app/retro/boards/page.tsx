@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: "Past retros", robots: unlisted };
 export default function RetroBoardsPage() {
   return (
     <>
-      <SiteHeader brand={<RetroBrand />} links={[{ href: "/retro", label: "About Retro" }]} />
+      <SiteHeader brand={<RetroBrand />} links={[{ href: "/retro/boards", label: "Past retros" }]} />
       <BoardList />
     </>
   );

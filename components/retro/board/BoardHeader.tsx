@@ -5,8 +5,8 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { BorderBeam } from "border-beam";
 import { ArrowRight, CircleHelp, Ellipsis, Lock, LockOpen, Trash2, Hourglass } from "lucide-react";
-import { HubLink } from "@/components/HubLink";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { SiteHeader } from "@/components/SiteHeader";
+import { RetroBrand } from "@/components/retro/RetroBrand";
 import { useTheme } from "@/components/theme/theme";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
@@ -15,7 +15,6 @@ import { IconButton } from "@/components/ui/IconButton";
 import { Input } from "@/components/ui/Field";
 import { Menu, MenuItem } from "@/components/ui/Menu";
 import { Popover } from "@/components/ui/Popover";
-import { RetroMark } from "@/components/retro/icons";
 import type { RetroBoardSummary } from "@/lib/retro/types";
 import { phaseInfo } from "@/lib/retro/types";
 
@@ -42,20 +41,45 @@ export function BoardHeader({
 }) {
   const { theme } = useTheme();
   const done = board.phase === "done";
+  const advance = phaseInfo(board.phase).advance;
 
   return (
-    <header className="sticky top-0 z-30 border-b border-border bg-[color-mix(in_srgb,var(--surface)_88%,transparent)] backdrop-blur-md">
-      <div className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-x-4 gap-y-3 px-4 py-3 sm:px-7">
-        <div className="flex min-w-0 flex-1 items-center gap-3">
-          <HubLink />
-          <Link href="/retro/boards" aria-label="All retros" className="shrink-0">
-            <RetroMark size={30} />
-          </Link>
-          <BoardTitle title={board.title} editable={isModerator} onRename={onRename} />
-        </div>
+    <>
+      <SiteHeader
+        brand={<RetroBrand compact />}
+        links={[{ href: "/retro/boards", label: "Past retros" }]}
+        actions={
+          <>
+            <Presence peers={peers} />
+            {!done &&
+              (isModerator ? (
+                <BorderBeam size="sm" colorVariant="sunset" theme={theme} active={canAdvance && !advancing} strength={0.9}>
+                  <Button
+                    size="sm"
+                    icon={<ArrowRight />}
+                    arrow
+                    disabled={!canAdvance}
+                    loading={advancing}
+                    onClick={onAdvance}
+                  >
+                    <span className="sm:hidden">Next step</span>
+                    <span className="hidden sm:inline">{advance}</span>
+                  </Button>
+                </BorderBeam>
+              ) : (
+                <span className="flex h-8 items-center gap-1.5 whitespace-nowrap rounded-btn border border-border bg-bg-subtle px-3 text-[12.5px] font-semibold text-text-3">
+                  <Hourglass size={13} />
+                  <span className="sm:hidden">Waiting</span>
+                  <span className="hidden sm:inline">Moderator moves the board</span>
+                </span>
+              ))}
+          </>
+        }
+      />
 
+      <div className="mx-auto flex w-full max-w-[1200px] flex-wrap items-center gap-3 px-4 pt-6 sm:px-8">
+        <BoardTitle title={board.title} editable={isModerator} onRename={onRename} />
         <div className="flex items-center gap-2">
-          <Presence peers={peers} />
           <CopyButton text={siteUrl(`/retro/${board.slug}`)} label="Share" />
           <HelpPopover />
           {isModerator && <PasswordPopover hasPassword={board.has_password} onSave={onSetPassword} />}
@@ -66,31 +90,9 @@ export function BoardHeader({
               </MenuItem>
             </Menu>
           )}
-          <ThemeToggle />
-          {!done &&
-            (isModerator ? (
-              <BorderBeam size="sm" colorVariant="sunset" theme={theme} active={canAdvance && !advancing} strength={0.9}>
-                <Button
-                  size="sm"
-                  icon={<ArrowRight />}
-                  arrow
-                  disabled={!canAdvance}
-                  loading={advancing}
-                  onClick={onAdvance}
-                >
-                  {phaseInfo(board.phase).advance}
-                </Button>
-              </BorderBeam>
-            ) : (
-              <span className="flex h-8 items-center gap-1.5 whitespace-nowrap rounded-btn border border-border bg-bg-subtle px-3 text-[12.5px] font-semibold text-text-3">
-                <Hourglass size={13} />
-                <span className="sm:hidden">Waiting</span>
-                <span className="hidden sm:inline">Moderator moves the board</span>
-              </span>
-            ))}
         </div>
       </div>
-    </header>
+    </>
   );
 }
 
@@ -114,21 +116,25 @@ function BoardTitle({ title, editable, onRename }: { title: string; editable: bo
           if (e.key === "Enter") save();
           if (e.key === "Escape") setDraft(null);
         }}
-        className="min-w-0 max-w-[340px] flex-1 rounded-lg border border-accent bg-surface px-2 py-1 text-[15px] font-extrabold tracking-[-0.01em] outline-none"
+        className="-ml-2 min-w-0 max-w-[480px] flex-1 rounded-lg border border-accent bg-surface px-2 py-0.5 text-[24px] font-extrabold tracking-[-0.02em] outline-none sm:text-[26px]"
       />
     );
   }
-  return editable ? (
-    <button
-      type="button"
-      onClick={() => setDraft(title)}
-      title="Rename board"
-      className="min-w-0 truncate rounded-lg px-2 py-1 text-left text-[15px] font-extrabold tracking-[-0.01em] transition-colors hover:bg-bg-subtle"
-    >
-      {title}
-    </button>
-  ) : (
-    <h1 className="min-w-0 truncate px-2 text-[15px] font-extrabold tracking-[-0.01em]">{title}</h1>
+  return (
+    <h1 className="mr-auto min-w-0 text-[24px] font-extrabold tracking-[-0.02em] sm:text-[26px]">
+      {editable ? (
+        <button
+          type="button"
+          onClick={() => setDraft(title)}
+          title="Rename board"
+          className="-ml-2 block max-w-full truncate rounded-lg px-2 py-0.5 text-left transition-colors hover:bg-bg-subtle"
+        >
+          {title}
+        </button>
+      ) : (
+        <span className="block truncate">{title}</span>
+      )}
+    </h1>
   );
 }
 
@@ -162,11 +168,13 @@ function HelpPopover() {
   return (
     <Popover trigger={<IconButton icon={<CircleHelp />} label="How this works" />} width={300}>
       <div className="text-[13.5px] leading-relaxed text-text-2">
-        <strong className="text-text">Fully anonymous.</strong> Nobody is asked for a name, and cards are never
-        linked to the person who wrote them. Your own cards have a soft orange outline so you can find them.{" "}
-        <Link href="/retro" className="font-semibold text-accent hover:text-accent-hover">
+        <Link href="/retro" className="mb-2 inline-block font-semibold text-accent hover:text-accent-hover">
           How Retro works
         </Link>
+        <p>
+          <strong className="text-text">Fully anonymous.</strong> Nobody is asked for a name, and cards are never
+          linked to the person who wrote them. Your own cards have a soft orange outline so you can find them.
+        </p>
       </div>
     </Popover>
   );

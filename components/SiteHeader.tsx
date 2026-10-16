@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export type NavLink = { href: string; label: string };
@@ -15,6 +18,7 @@ export function SiteHeader({
   actions?: React.ReactNode;
   maxWidth?: string;
 }) {
+  const pathname = usePathname();
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-[color-mix(in_srgb,var(--bg)_84%,transparent)] backdrop-blur-md">
       <div className={`mx-auto flex ${maxWidth} items-center justify-between gap-4 px-4 py-3 sm:px-8`}>
@@ -26,7 +30,8 @@ export function SiteHeader({
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="rounded-lg px-3 py-1.5 text-sm text-text-2 transition-colors hover:bg-bg-subtle hover:text-text"
+                  aria-current={pathname === l.href ? "page" : undefined}
+                  className="rounded-lg px-3 py-1.5 text-sm text-text-2 transition-colors hover:bg-bg-subtle hover:text-text aria-[current=page]:font-medium aria-[current=page]:text-text"
                 >
                   {l.label}
                 </Link>

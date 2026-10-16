@@ -62,7 +62,7 @@ export function Column({
         )
       )}
 
-      <div className="flex min-h-[110px] flex-col gap-3 pb-6">
+      <div className="flex flex-col gap-3 pb-1 md:min-h-[110px] md:pb-6">
         <AnimatePresence initial={false}>
           {topics.map((topic) => (
             <Topic
